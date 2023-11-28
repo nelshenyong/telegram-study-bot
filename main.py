@@ -11,9 +11,15 @@ import re
 import cmath
 
 
-TOKEN = '6820034900:AAGyDukDNTizdNPMBdxhNCKinJd0avQxask'
-BOT_USERNAME = 'AxvoraBot'
-AUTHOR = 'Nelshen Yong'
+TOKEN = "YOUR_BOT_TOKEN"
+BOT_USERNAME = "YOUR_BOT_USERNAME"
+AUTHOR = "YOUR_AUTHOR_NAME"
+INSTAGRAM = "YOUR_INSTAGRAM_USERNAME"
+TELEGRAM = "YOUR_TELEGRAM_USERNAME"
+GITHUB = "YOUR_GITHUB_USERNAME"
+PHONE_NUM = "YOUR_PHONE_NUMBER"
+EMAIL = "YOUR_EMAIL"
+WEBSITE = "YOUR_WEBSITE"
 
 # Add a state for conversation
 START_MENU = 0
@@ -66,16 +72,16 @@ async def menu_command(update: Update, context):
     await update.message.reply_text(f'Menu {BOT_USERNAME} - List Commands\n\n/study - Menampilkan fitur untuk belajar.\n/about - Menampilkan informasi dari {BOT_USERNAME}.\n/search - Mencari sumber dalam internet.\n/youtube - Mencari video dari Youtube.\n/contact - Mempilkan kontak dari {BOT_USERNAME}.\n/feedback - Memberikan saran kepada {BOT_USERNAME}\n/dice - Menghasilkan angka dadu secara acak.')
     
 async def study_command(update: Update, context):
-    await update.message.reply_text(f'Menu AxvoraBot - Study Commands\n\n/calculator - Menghitung dari perhitungan sederhana.\n/geometry - Menghitung dari perhitungan geometri sederhana\n/physics - Menghitung dari perhitungan fisika sederhana\n/economics - Menghitung dari perhitungan ekonomi sederhana\n/study_help - Bantuan untuk perintah dalam Study Commands\n')
+    await update.message.reply_text(f'Menu {BOT_USERNAME} - Study Commands\n\n/calculator - Menghitung dari perhitungan sederhana.\n/geometry - Menghitung dari perhitungan geometri sederhana\n/physics - Menghitung dari perhitungan fisika sederhana\n/economics - Menghitung dari perhitungan ekonomi sederhana\n/study_help - Bantuan untuk perintah dalam Study Commands\n')
 
 async def study_help_command(update: Update, context):
-    await update.message.reply_text(f'Study Bot Help')
+    await update.message.reply_text(f"Study Help - {BOT_USERNAME}\n\nCommand Examples:\n\tGeometry:\n\t\t\tSquare: /geometry square side= 'value'\n\t\t\tRectangle: /geometry rectangle length= 'value' width= 'value'\n\t\t\tCircle: /geometry circle radius= 'value'\n\t\t\tTriangle: /geometry triangle side1= 'value1' side2= 'value2' side3= 'value3'\n\n\tPhysics:\n\t\t\t/physics force mass= 'value' acceleration= 'value'\n\t\t\t/physics kinetic_energy mass= ''value velocity= 'value'\n\t\t\t/physics velocity initial_velocity= 'value' acceleration= 'value' time= 'value'\n\t\t\t/physics power work_done= 'value' time= 'value'\n\t\t\t/physics potential_energy mass= 'value' height= 'value'\n\n\tEconomics:\n\t\t\t/economics simple_interest principal= 'value' rate= 'value' time= 'value'\n\t\t\t/economics compound_interest principal= 'value' rate= 'value' time= 'value'\n\t\t\t/economics profit_percentage selling_price= 'value' cost_price= 'value'\n\t\t\t/economics profit_loss selling_price= 'value' cost_price= 'value'\n\nCatatan: 'value' adalah sebuah nilai yang harus diubah sesuai dengan nilai yang diinginkan!")
     
 async def about_command(update: Update, context):
     await update.message.reply_text(f'{BOT_USERNAME} adalah sebuah bot Telegram yang dikembangkan oleh {AUTHOR}. {BOT_USERNAME} adalah asisten virtual yang dirancang untuk memberikan bantuan dalam belajar berbagai mata pelajaran, termasuk matematika, fisika, dan ekonomi. Bot ini menyediakan fungsi kalkulator untuk menghitung berbagai rumus matematika, fisika, dan ekonomi, dan fitur tambahan lainnya sehingga membantu pengguna dalam mengeksplorasi pembelajaran yang menyenangkan.')
 
 async def contact_command(update: Update, context):
-    await update.message.reply_text('Contact us:\nYou can reach us at contact@axvora.com')
+    await update.message.reply_text(f'This bot author is {AUTHOR}\nContacts:\n\t\tTelegram: https://t.me/{TELEGRAM}\n\t\tInstagram: https://instagram.com/{INSTAGRAM}\n\t\tGithub: https://github.com/{GITHUB}\n\t\tPhone Number: {PHONE_NUM}\n\t\tEmail: {EMAIL}\n\t\tWebsite: {WEBSITE}')
 
 async def roll_dice_command(update: Update, context):
     dice_result = random.randint(1, 6)
@@ -157,7 +163,7 @@ def get_title_from_link(link):
 async def physics_command(update: Update, context: CallbackContext):
     user_input = ' '.join(context.args).lower()
 
-    formulas = ['force', 'kinetic_energy', 'velocity', 'acceleration', 'work', 'power', 'potential_energy']
+    formulas = ['force', 'kinetic_energy', 'velocity', 'power', 'potential_energy']
 
     if any(formula in user_input for formula in formulas):
         try:
@@ -166,23 +172,20 @@ async def physics_command(update: Update, context: CallbackContext):
             elif 'kinetic_energy' in user_input:
                 result = calculate_kinetic_energy(user_input)
             elif 'velocity' in user_input:
-                result = calculate_velocity(user_input)
-            elif 'acceleration' in user_input:
-                result = calculate_acceleration(user_input)
-            elif 'work' in user_input:
-                result = calculate_work(user_input)
+                result = calculate_velocity_result(user_input)  
             elif 'power' in user_input:
-                result = calculate_power(user_input)
+                result = calculate_power_result(user_input)  
             elif 'potential_energy' in user_input:
-                result = calculate_potential_energy(user_input)
+                result = calculate_potential_energy_result(user_input)  
             else:
-                result = 'Invalid formula specified. Please choose from force, kinetic_energy, velocity, or acceleration.'
+                result = 'Invalid formula specified. Please choose from force, kinetic_energy, velocity, power, or potential_energy'
 
             await update.message.reply_text(result)
         except Exception as e:
             await update.message.reply_text(f'Error in calculation: {str(e)}')
     else:
-        await update.message.reply_text('Invalid formula specified. Please choose from force, kinetic_energy, velocity, or acceleration.')
+        await update.message.reply_text('Invalid formula specified. Please choose from force, kinetic_energy, velocity, power, or potential_energy')
+
 
 def calculate_force(user_input):
     mass = get_numeric_value(user_input, 'mass')
@@ -196,32 +199,20 @@ def calculate_kinetic_energy(user_input):
     kinetic_energy = 0.5 * mass * velocity**2
     return f'Kinetic Energy - Result: {kinetic_energy} J'
 
-def calculate_velocity(user_input):
+def calculate_velocity_result(user_input):
     initial_velocity = get_numeric_value(user_input, 'initial_velocity')
     acceleration = get_numeric_value(user_input, 'acceleration')
     time = get_numeric_value(user_input, 'time')
     velocity = initial_velocity + acceleration * time
     return f'Velocity - Result: {velocity} m/s'
 
-def calculate_acceleration(user_input):
-    change_in_velocity = get_numeric_value(user_input, 'change_in_velocity')
-    time = get_numeric_value(user_input, 'time')
-    acceleration = change_in_velocity / time
-    return f'Acceleration - Result: {acceleration} m/s^2'
-
-def calculate_work(user_input):
-    force = get_numeric_value(user_input, 'force')
-    displacement = get_numeric_value(user_input, 'displacement')
-    work = force * displacement
-    return f'Work - Result: {work} J'
-
-def calculate_power(user_input):
+def calculate_power_result(user_input):
     work_done = get_numeric_value(user_input, 'work_done')
     time = get_numeric_value(user_input, 'time')
     power = work_done / time
     return f'Power - Result: {power} W'
 
-def calculate_potential_energy(user_input):
+def calculate_potential_energy_result(user_input):
     mass = get_numeric_value(user_input, 'mass')
     height = get_numeric_value(user_input, 'height')
     potential_energy = mass * 9.8 * height
@@ -291,24 +282,27 @@ async def button_click(update: Update, context: CallbackContext):
     elif data == 'button_about':
         await query.message.reply_text(f'{BOT_USERNAME} adalah sebuah bot Telegram yang dikembangkan oleh {AUTHOR}. {BOT_USERNAME} adalah asisten virtual yang dirancang untuk memberikan bantuan dalam belajar berbagai mata pelajaran, termasuk matematika, fisika, dan ekonomi. Bot ini menyediakan fungsi kalkulator untuk menghitung berbagai rumus matematika, fisika, dan ekonomi, dan fitur tambahan lainnya sehingga membantu pengguna dalam mengeksplorasi pembelajaran yang menyenangkan.')
     elif data == 'button_study':
-        await query.message.reply_text(f'Button study')
+        await query.message.reply_text(f'Menu {BOT_USERNAME} - Study Commands\n\n/calculator - Menghitung dari perhitungan sederhana.\n/geometry - Menghitung dari perhitungan geometri sederhana\n/physics - Menghitung dari perhitungan fisika sederhana\n/economics - Menghitung dari perhitungan ekonomi sederhana\n/study_help - Bantuan untuk perintah dalam Study Commands\n')
     elif data == 'button_contact':
-        await query.message.reply_text('Button 4 is clicked!')
+        await query.message.reply_text(f'This bot author is {AUTHOR}\nContacts:\n\t\tTelegram: https://t.me/{TELEGRAM}\n\t\tInstagram: https://instagram.com/{INSTAGRAM}\n\t\tGithub: https://github.com/{GITHUB}\n\t\tPhone Number: {PHONE_NUM}\n\t\tEmail: {EMAIL}\n\t\tWebsite: {WEBSITE}')
     else:
         await query.message.reply_text(f'Unknown button clicked: {data}')
 
     # IMPORTANT: Acknowledge the button click
     await context.bot.send_chat_action(chat_id=query.message.chat_id, action="typing")
     
-async def calculate_command(update: Update, context: CallbackContext):
+async def calculator_command(update: Update, context: CallbackContext):
     user_input = ' '.join(context.args)
 
     # Remove non-numeric and non-operator characters
     cleaned_input = re.sub(r'[^0-9+\-*/().]', '', user_input)
 
     try:
-        result = eval(cleaned_input)
-        await update.message.reply_text(f'Result: {result}')
+        if cleaned_input:
+            result = eval(cleaned_input)
+            await update.message.reply_text(f'Result: {result}')
+        else:
+            await update.message.reply_text('Error: Empty input. Please provide a valid mathematical expression.')
     except Exception as e:
         await update.message.reply_text(f'Error in calculation: {str(e)}')
         
@@ -449,7 +443,7 @@ if __name__ == '__main__':
     app.add_handler(CommandHandler('youtube', youtube_search_command))
     app.add_handler(CommandHandler('search', google_search_command))
     app.add_handler(CommandHandler('feedback', feedback_command))
-    app.add_handler(CommandHandler('calculate', calculate_command))
+    app.add_handler(CommandHandler('calculator', calculator_command))
     app.add_handler(CommandHandler('geometry', geometry_command))
     app.add_handler(CommandHandler('physics', physics_command))
     app.add_handler(CommandHandler('economics', economics_command))
