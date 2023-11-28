@@ -1,0 +1,6 @@
+beautifulsoup4==4.12.2
+googlesearch-python==1.2.3
+python-telegram-bot==20.7
+requests==2.31.0
+telegram-text==0.1.2
+youtube-search-python==1.6.6
